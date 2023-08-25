@@ -80,7 +80,7 @@
         android:id="@+id/txtTipoTicket"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="No funciona el correo"
+        android:text="No funciona el correo "
         android:textColor="@color/color_dark_low"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
