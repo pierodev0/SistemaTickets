@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="64dp"
+    tools:context=".DetalleTicketActivity">
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalle ticket"
+        android:textColor="#292A62"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Id:"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/txtIdTicket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1059967"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv1"
+        />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nombres"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtIdTicket" />
+
+    <TextView
+        android:id="@+id/txtNombrePersona"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Piero Ron"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv2"
+        />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo de Solicitud"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombrePersona" />
+
+    <TextView
+        android:id="@+id/txtTipoTicket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="No funciona el correo"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv3"
+        />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Descripcion"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTipoTicket" />
+
+    <TextView
+        android:id="@+id/txtDescripcionTicket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Descripcion del problema"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv4"
+        />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescripcionTicket" />
+
+    <TextView
+        android:id="@+id/txtEstadoTicket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Atendido"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv5"
+        />
+
+    <TextView
+        android:id="@+id/tv6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Solucion"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoTicket" />
+
+    <TextView
+        android:id="@+id/txtSolucionTicket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Detalle de la solucion"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv6"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

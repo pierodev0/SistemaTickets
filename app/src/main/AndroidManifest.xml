@@ -12,10 +12,10 @@
         android:theme="@style/Theme.SistemaDeTikets"
         tools:targetApi="31">
         <activity
-            android:name=".CrearTicketActivity"
+            android:name=".DetalleTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".ListaTickets"
+            android:name=".CrearTicketActivity"
             android:exported="false" />
         <activity
             android:name=".Usuario"
