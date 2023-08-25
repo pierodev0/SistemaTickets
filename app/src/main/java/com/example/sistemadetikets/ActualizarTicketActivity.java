@@ -54,7 +54,10 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         if(view.getId() == R.id.btnActualizarTicket){
             actualizarTicket();
         }
+
     }
+
+
 
     private void actualizarTicket() {
         SQLiteDatabase db = conn.getWritableDatabase();
@@ -70,7 +73,7 @@ public class ActualizarTicketActivity extends AppCompatActivity {
 
         Intent intent = new Intent(ActualizarTicketActivity.this,Usuario.class);
         startActivity(intent);
-        Toast.makeText(this, "Se actualizo registro", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Se actualizo el ticket", Toast.LENGTH_SHORT).show();
         db.close();
     }
 }

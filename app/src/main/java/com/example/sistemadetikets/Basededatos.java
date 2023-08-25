@@ -96,7 +96,7 @@ public class Basededatos extends SQLiteOpenHelper {
 
         // Ticket de ejemplo 2
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 2 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 2 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "El codigo no me compila le he preguntado a Chat GPT que pasa pero no me ayuda. AAAAAAAAAAAAA");
         values.put(COLUMN_TIPO_TICKET,"Problemas con la aplicación móvil");
         values.put(COLUMN_ESTADO_TICKET,"Cerrado");
@@ -104,7 +104,7 @@ public class Basededatos extends SQLiteOpenHelper {
 
         // Ticket de ejemplo 3
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 3); // Reemplaza 3 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 3 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Desde ayer no puedo entrar a mi pc debido a que me dice que le de dinero por bitcoin no se que hacer");
         values.put(COLUMN_TIPO_TICKET,"Virus en la computadora");
         values.put(COLUMN_ESTADO_TICKET,"En curso");

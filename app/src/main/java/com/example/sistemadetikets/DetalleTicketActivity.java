@@ -89,8 +89,22 @@ public class DetalleTicketActivity extends AppCompatActivity {
             miIntent.putExtra("user_id", userId);
 
         }
+        if(view.getId() == R.id.btnEliminarTicket){
+            eliminarTicket();
+        }
         if(miIntent != null){
             startActivity(miIntent);
         }
+    }
+
+    private void eliminarTicket() {
+        SQLiteDatabase db = conn.getWritableDatabase();
+        String[] parametros = {txtIdTicket.getText().toString()};
+
+        db.delete(Basededatos.TABLE_TICKET,Basededatos.COLUMN_ID_TICKET+"=?",parametros);
+        db.close();
+        Intent intent = new Intent(DetalleTicketActivity.this,Usuario.class);
+        startActivity(intent);
+        Toast.makeText(this, "Se elimino el ticket", Toast.LENGTH_SHORT).show();
     }
 }
