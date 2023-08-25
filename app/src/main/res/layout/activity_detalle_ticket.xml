@@ -225,7 +225,7 @@
             app:iconTint="@color/white" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnOpcionCrearTicket"
+            android:id="@+id/btnOpcionActualizarTicket"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

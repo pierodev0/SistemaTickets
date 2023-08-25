@@ -2,9 +2,11 @@ package com.example.sistemadetikets;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ public class DetalleTicketActivity extends AppCompatActivity {
     TextView txtCorreo;
 
     private TicketLayout item;
+    String userId;
+    Ticket ticket = null;
 
 
     @Override
@@ -34,13 +38,14 @@ public class DetalleTicketActivity extends AppCompatActivity {
         txtDescripcionTicket = (TextView) findViewById(R.id.txtDescripcionTicket);
         txtEstadoTicket = (TextView) findViewById(R.id.txtEstadoTicket);
         txtSolucionTicket = (TextView) findViewById(R.id.txtSolucionTicket);
-
         txtCorreo = (TextView) findViewById(R.id.txtCorreo);
+
+        userId = getIntent().getStringExtra("user_id");
 
         //item = (Ticket) getIntent().getSerializableExtra("data");
 
         Bundle objetoEnviado = getIntent().getExtras();
-        Ticket ticket = null;
+
 
         if(objetoEnviado != null){
             ticket = (Ticket) objetoEnviado.getSerializable("data");
@@ -73,6 +78,19 @@ public class DetalleTicketActivity extends AppCompatActivity {
             Toast.makeText(this, "El registro no existe", Toast.LENGTH_SHORT).show();
             //campoNombrePersona.setText("");
             //campoTelefonoPersona.setText("");
+        }
+    }
+
+    public void onClick(View view) {
+        Intent miIntent = null;
+        if(view.getId() == R.id.btnOpcionActualizarTicket){
+            miIntent = new Intent(DetalleTicketActivity.this,ActualizarTicketActivity.class);
+            miIntent.putExtra("data",ticket);
+            miIntent.putExtra("user_id", userId);
+
+        }
+        if(miIntent != null){
+            startActivity(miIntent);
         }
     }
 }
