@@ -42,20 +42,20 @@ public class CrearTicketActivity extends AppCompatActivity {
          userId = getIntent().getStringExtra("user_id");
 
 
-        consultarListaPersonas();
+        consultarListaTipos();
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listaTipos);
         comboSpinner.setAdapter(adapter);
 
 
     }
 
-    private void consultarListaPersonas() {
+    private void consultarListaTipos() {
         SQLiteDatabase db = conn.getReadableDatabase();
 
         TipoSolicitud solicitud = null;
         tipoSolicituds = new ArrayList<TipoSolicitud>();
 
-        //SELECT * FROM USUARIOS
+        //SELECT * FROM tipo_solicitud
         Cursor cursor = db.rawQuery("SELECT * FROM tipo_solicitud",null);
         while (cursor.moveToNext()){
             solicitud = new TipoSolicitud();
