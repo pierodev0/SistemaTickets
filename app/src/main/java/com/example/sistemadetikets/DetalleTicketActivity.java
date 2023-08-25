@@ -59,7 +59,6 @@ public class DetalleTicketActivity extends AppCompatActivity {
     }
 
     private void consultarUsuario(Integer idUsuario) {
-        Toast.makeText(this, idUsuario.toString(), Toast.LENGTH_SHORT).show();
         SQLiteDatabase db = conn.getWritableDatabase();
         String[] parametros = {idUsuario.toString()};
         String[] campos ={"nombres","apellidos","email"};
