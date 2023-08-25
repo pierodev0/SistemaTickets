@@ -45,11 +45,14 @@ public class TicketAdaptador extends BaseAdapter {
         TextView txtIdTicket = (TextView) convertView.findViewById(R.id.txtIdTicket);
         TextView txtTipoTicket = (TextView) convertView.findViewById(R.id.txtTipoTicket);
         TextView txtDescripcionTicket = (TextView) convertView.findViewById(R.id.txtDescripcionTicket);
+        TextView txtEstadoTicket = (TextView) convertView.findViewById(R.id.txtEstadoTicket);
+
 
         //imgFoto.setImageREsource(Item.getImgFoto);
         txtIdTicket.setText(Item.getId()+""); //Tiene que ser string
         txtTipoTicket.setText(Item.getTitulo());
         txtDescripcionTicket.setText(Item.getDescripcion());
+        txtEstadoTicket.setText(Item.getEstado());
 
 
         return convertView;

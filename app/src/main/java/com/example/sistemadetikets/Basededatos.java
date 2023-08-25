@@ -29,7 +29,7 @@ public class Basededatos extends SQLiteOpenHelper {
             + ")";
 
 
-    //Campos para tipo solicitud
+    //Campos para tipo solicitud ticket
     public static final String TABLE_TIPO_SOLICITUD = "tipo_solicitud";
     public static final String COLUMN_ID_SOLICITUD = "id_solicitud";
     public static final String COLUMN_NOMBRE = "nombre";
@@ -38,6 +38,26 @@ public class Basededatos extends SQLiteOpenHelper {
             TABLE_TIPO_SOLICITUD + "(" +
             COLUMN_ID_SOLICITUD + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_NOMBRE + " TEXT" +
+            ")";
+
+    // ----------------------tabla ticket
+    public static final String TABLE_TICKET = "ticket";
+
+    public static final String COLUMN_ID_TICKET = "id_ticket";
+    public static final String COLUMN_ID_USUARIO = "id_usuario";
+    public static final String COLUMN_FECHA_CREACION = "fecha_creacion";
+    public static final String COLUMN_TIPO_TICKET = "tipo";
+    public static final String COLUMN_DESCRIPCION = "descripcion";
+    public static final String COLUMN_ESTADO_TICKET = "estado";
+
+    public static final String CREATE_TABLE_TICKET = "CREATE TABLE " +
+            TABLE_TICKET + "(" +
+            COLUMN_ID_TICKET + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_ID_USUARIO + " INTEGER," +
+            COLUMN_FECHA_CREACION + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
+            COLUMN_TIPO_TICKET + " STRING," +
+            COLUMN_DESCRIPCION + " TEXT," +
+            COLUMN_ESTADO_TICKET + " TEXT" +
             ")";
     public Basededatos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,6 +68,7 @@ public class Basededatos extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_USERS);
         db.execSQL(CREATE_TABLE_TIPO_SOLICITUD);
+        db.execSQL(CREATE_TABLE_TICKET);
         insertarDatosEjemplo(db);
     }
 
@@ -55,6 +76,7 @@ public class Basededatos extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPO_SOLICITUD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TICKET);
         onCreate(db);
     }
 
@@ -62,6 +84,32 @@ public class Basededatos extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_TIPO_SOLICITUD + " (" + COLUMN_NOMBRE + ") VALUES ('Problemas con el email')");
         db.execSQL("INSERT INTO " + TABLE_TIPO_SOLICITUD + " (" + COLUMN_NOMBRE + ") VALUES ('Problemas con la app')");
         db.execSQL("INSERT INTO " + TABLE_TIPO_SOLICITUD + " (" + COLUMN_NOMBRE + ") VALUES ('Virus en computadora')");
+
+        ContentValues values = new ContentValues();
+
+        // Ticket de ejemplo 1
+        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_DESCRIPCION, "Problemas con el correo electrónico desde el domingo. NO puedo entrar y me voy quedar sin trabajo");
+        values.put(COLUMN_TIPO_TICKET,"Problemas con el correo electrónico");
+        values.put(COLUMN_ESTADO_TICKET,"Abierto");
+        db.insert(TABLE_TICKET, null, values);
+
+        // Ticket de ejemplo 2
+        values.clear();
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 2 con el ID del usuario real
+        values.put(COLUMN_DESCRIPCION, "El codigo no me compila le he preguntado a Chat GPT que pasa pero no me ayuda. AAAAAAAAAAAAA");
+        values.put(COLUMN_TIPO_TICKET,"Problemas con la aplicación móvil");
+        values.put(COLUMN_ESTADO_TICKET,"Cerrado");
+        db.insert(TABLE_TICKET, null, values);
+
+        // Ticket de ejemplo 3
+        values.clear();
+        values.put(COLUMN_ID_USUARIO, 3); // Reemplaza 3 con el ID del usuario real
+        values.put(COLUMN_DESCRIPCION, "Desde ayer no puedo entrar a mi pc debido a que me dice que le de dinero por bitcoin no se que hacer");
+        values.put(COLUMN_TIPO_TICKET,"Virus en la computadora");
+        values.put(COLUMN_ESTADO_TICKET,"En curso");
+        db.insert(TABLE_TICKET, null, values);
+
     }
 
     public void insertUser(String name, String lastName, String email, String password) {
