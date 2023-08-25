@@ -200,4 +200,30 @@ public class Basededatos extends SQLiteOpenHelper {
 
         return userLastName;
     }
+
+    public String obtenerIdUsuario(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {COLUMN_ID};
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        String userName = "";
+        if (cursor.moveToFirst()) {
+            userName = cursor.getString(cursor.getColumnIndex(COLUMN_ID));
+        }
+        cursor.close();
+        db.close();
+
+        return userName;
+    }
 }

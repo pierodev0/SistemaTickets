@@ -27,6 +27,7 @@ public class Usuario extends AppCompatActivity {
     Basededatos conn;
 
     TextView txt_bienvenida;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class Usuario extends AppCompatActivity {
 
         String userName = getIntent().getStringExtra("user_name");
         String userLastName = getIntent().getStringExtra("user_last_name");
+        userId = getIntent().getStringExtra("user_id");
+
 
         lvItems = (ListView) findViewById(R.id.lvItems);
         conn = new Basededatos(getApplicationContext());
@@ -47,9 +50,23 @@ public class Usuario extends AppCompatActivity {
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
-                intent.putExtra("data",arrayEntidad.get(position));
+                //intent.putExtra("data",arrayEntidad.get(position));
+                intent.putExtra("data",listaTicket.get(position));
                 startActivity(intent);
+
+
+                /*
+                //Enviar el objeto a otra actividad
+                Ticket ticket = listaTicket.get(position);
+                Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",ticket);
+                startActivity(intent);
+                */
+
             }
         });
 
@@ -80,15 +97,9 @@ public class Usuario extends AppCompatActivity {
             listaTicket.add(ticket);
 
         }
-        obtenerLista();
+
     }
 
-    private void obtenerLista() {
-        listaInformacion = new ArrayList<String>();
-        for (int i = 0; i <listaTicket.size();i++){
-            //listaInformacion.add(listaTicket.get(i).getId() + " - "+listaTicket.get(i).getNombre());
-        }
-    }
 
     private ArrayList<TicketLayout> getTickets(){
         ArrayList<TicketLayout> listeItems = new ArrayList<>();
@@ -113,6 +124,8 @@ public class Usuario extends AppCompatActivity {
         Intent miIntent = null;
         if(view.getId() == R.id.btnOpcionCrearTicket){
             miIntent = new Intent(Usuario.this,CrearTicketActivity.class);
+            miIntent.putExtra("user_id", userId);
+
         }
         if(miIntent != null){
             startActivity(miIntent);

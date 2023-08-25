@@ -47,7 +47,7 @@
         android:id="@+id/tv2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nombres"
+        android:text="Nombre Usuario"
         android:textColor="#292A62"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
@@ -58,11 +58,33 @@
         android:id="@+id/txtNombrePersona"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Piero Ron"
+        android:text="Anonimo"
         android:textColor="@color/color_dark_low"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv2"
+        />
+
+    <TextView
+        android:id="@+id/tv7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Correo Electronico"
+        android:textColor="#292A62"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombrePersona" />
+
+    <TextView
+        android:id="@+id/txtCorreo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="hola@gmail.com"
+        android:textColor="@color/color_dark_low"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv7"
         />
 
     <TextView
@@ -74,7 +96,7 @@
         android:textStyle="bold"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombrePersona" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCorreo" />
 
     <TextView
         android:id="@+id/txtTipoTicket"

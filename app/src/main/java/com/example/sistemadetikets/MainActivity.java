@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 if (basededatos.checkUserCredentials(email, password)){
                     String userName = basededatos.obtenerNombreUsuarioDesdeBD(email);
                     String userLastName = basededatos.obtenerApellidoUsuarioDesdeBD(email);
+                    String userId = basededatos.obtenerIdUsuario(email);
                     etEmail.setText("");
                     etPass.setText("");
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, Usuario.class);
                     intent.putExtra("user_name", userName);
                     intent.putExtra("user_last_name", userLastName);
+                    intent.putExtra("user_id", userId);
                     startActivity(intent);
                 }else {
 
