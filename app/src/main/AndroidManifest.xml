@@ -12,6 +12,15 @@
         android:theme="@style/Theme.SistemaDeTikets"
         tools:targetApi="31">
         <activity
+            android:name=".CrearTicketAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleTicketAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin"
+            android:exported="false" />
+        <activity
             android:name=".ActualizarTicketActivity"
             android:exported="false" />
         <activity

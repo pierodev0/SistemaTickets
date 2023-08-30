@@ -3,10 +3,12 @@ package com.example.sistemadetikets.entidades;
 public class TipoSolicitud {
     private Integer id;
     private String nombre;
+    private int id_empleado;
 
-    public TipoSolicitud(Integer id, String nombre) {
+    public TipoSolicitud(Integer id, String nombre, int id_empleado) {
         this.id = id;
         this.nombre = nombre;
+        this.id_empleado = id_empleado;
     }
 
     public TipoSolicitud(){}
@@ -25,5 +27,12 @@ public class TipoSolicitud {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public Integer getIdEmpleado() {
+        return id_empleado;
+    }
+
+    public void setIdEmpleado(Integer id_empleado) {
+        this.id_empleado = id_empleado;
     }
 }

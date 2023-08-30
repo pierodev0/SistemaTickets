@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Basededatos basededatos;
 
-    //Linea agregada piero
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +44,17 @@ public class MainActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPass.getText().toString();
 
-                if(TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     etEmail.setError("Email es obligatorio");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     etPass.setError("Contraseña es obligatoria");
                     return;
                 }
 
-                if (!basededatos.checkUserCredentials(email, password)){
+                if (!basededatos.checkUserCredentials(email, password)) {
 
                     Toast.makeText(MainActivity.this, "Usuario no existe en la base de datos", Toast.LENGTH_LONG).show();
 
@@ -71,12 +70,23 @@ public class MainActivity extends AppCompatActivity {
                     etEmail.setText("");
                     etPass.setText("");
 
-                    // Redirigir a la Actividad de Usuario y pasar los datos
-                    Intent intent = new Intent(MainActivity.this, Usuario.class);
-                    intent.putExtra("user_name", userName);
-                    intent.putExtra("user_last_name", userLastName);
-                    intent.putExtra("user_id", userId);
-                    startActivity(intent);
+                    String userRole = basededatos.obtenerRolUsuarioDesdeBD(email);
+
+                    // Redirigir a la Actividad de Usuario según su rol y pasar los datos
+                    Intent intent;
+                    if("admin".equals(userRole)){
+                        intent = new Intent(MainActivity.this, Admin.class);
+                        intent.putExtra("user_name", userName);
+                        intent.putExtra("user_last_name", userLastName);
+                        intent.putExtra("user_id", userId);
+                        startActivity(intent);
+                    } else if ("usuario".equals(userRole)){
+                        intent = new Intent(MainActivity.this, Usuario.class);
+                        intent.putExtra("user_name", userName);
+                        intent.putExtra("user_last_name", userLastName);
+                        intent.putExtra("user_id", userId);
+                        startActivity(intent);
+                    }
                 }else {
 
                 }

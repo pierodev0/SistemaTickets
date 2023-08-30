@@ -104,7 +104,7 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
 
         values.put(Basededatos.COLUMN_DESCRIPCION,txtDescripcionTicket.getText().toString());
-        values.put(Basededatos.COLUMN_ESTADO_TICKET,"Abierto");
+        values.put(Basededatos.COLUMN_NAME_STATE,"Abierto");
         values.put(Basededatos.COLUMN_ID_USUARIO,ticket.getId_usuario().toString());
 
         int idCombo = (int) comboSpinner.getSelectedItemId();
@@ -113,7 +113,7 @@ public class ActualizarTicketActivity extends AppCompatActivity {
             int idTipo = tipoSolicituds.get(idCombo - 1).getId();
 
             String tipoTicket = listaTipos.get(idTipo);
-            values.put(Basededatos.COLUMN_TIPO_TICKET,tipoTicket);
+            values.put(Basededatos.COLUMN_TICKET_ID_SOLICITUD,tipoTicket);
 
             db.update(Basededatos.TABLE_TICKET,values,Basededatos.COLUMN_ID_TICKET+"=?",parametros);
 

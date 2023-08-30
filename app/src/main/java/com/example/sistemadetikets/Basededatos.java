@@ -13,21 +13,35 @@ public class Basededatos extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SystemTikets.db";
     private static final int DATABASE_VERSION = 1;
 
+    // ----------------------tabla usuario
     private static final String TABLE_USERS = "usuarios";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NOMBRES = "nombres";
     private static final String COLUMN_APELLIDOS = "apellidos";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PASSWORD = "password";
+    private static final String COLUMN_ROLE = "rol";
+
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NOMBRES + " TEXT,"
             + COLUMN_APELLIDOS + " TEXT,"
             + COLUMN_EMAIL + " TEXT,"
-            + COLUMN_PASSWORD + " TEXT"
+            + COLUMN_PASSWORD + " TEXT,"
+            + COLUMN_ROLE + " TEXT DEFAULT 'usuario'"
             + ")";
 
+    // ----------------------tabla estado
+    public static final String TABLE_STATE = "estado";
+    public static final String COLUMN_ID_STATE = "id_estado";
+    public static final String COLUMN_NAME_STATE = "nombre_estado";
+
+    private static final String CREATE_TABLE_STATE = "CREATE TABLE " +
+            TABLE_STATE + "(" +
+            COLUMN_ID_STATE + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_NAME_STATE + " TEXT" +
+            ")";
 
     //Campos para tipo solicitud ticket
     public static final String TABLE_TIPO_SOLICITUD = "tipo_solicitud";
@@ -40,25 +54,31 @@ public class Basededatos extends SQLiteOpenHelper {
             COLUMN_NOMBRE + " TEXT" +
             ")";
 
+
     // ----------------------tabla ticket
     public static final String TABLE_TICKET = "ticket";
 
     public static final String COLUMN_ID_TICKET = "id_ticket";
     public static final String COLUMN_ID_USUARIO = "id_usuario";
     public static final String COLUMN_FECHA_CREACION = "fecha_creacion";
-    public static final String COLUMN_TIPO_TICKET = "tipo";
+    public static final String COLUMN_TICKET_ID_STATE = "id_estado";
+
+    public static final String COLUMN_TICKET_ID_SOLICITUD = "id_solicitud"; // id_solicitud
     public static final String COLUMN_DESCRIPCION = "descripcion";
-    public static final String COLUMN_ESTADO_TICKET = "estado";
+    public static final String COLUMN_SOLUTION = "solucion";
 
     public static final String CREATE_TABLE_TICKET = "CREATE TABLE " +
             TABLE_TICKET + "(" +
             COLUMN_ID_TICKET + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_ID_USUARIO + " INTEGER," +
             COLUMN_FECHA_CREACION + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
-            COLUMN_TIPO_TICKET + " STRING," +
+            COLUMN_TICKET_ID_STATE + " INTEGER DEFAULT 1," +
+            COLUMN_TICKET_ID_SOLICITUD + " INTEGER," +
             COLUMN_DESCRIPCION + " TEXT," +
-            COLUMN_ESTADO_TICKET + " TEXT" +
+            COLUMN_SOLUTION + " TEXT DEFAULT 'En espera de solución'" +
             ")";
+
+
     public Basededatos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -67,8 +87,11 @@ public class Basededatos extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CREATE_TABLE_USERS);
+        db.execSQL(CREATE_TABLE_STATE);
         db.execSQL(CREATE_TABLE_TIPO_SOLICITUD);
         db.execSQL(CREATE_TABLE_TICKET);
+        insertarAdminPorDefecto(db);
+        insertarEstadosPorDefecto(db);
         insertarDatosEjemplo(db);
     }
 
@@ -80,6 +103,32 @@ public class Basededatos extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Insertando usuario con rol administrador
+    private void insertarAdminPorDefecto(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_NOMBRES, "Piero");
+        values.put(COLUMN_APELLIDOS, "Bayona");
+        values.put(COLUMN_EMAIL, "admin@gmail.com");
+        values.put(COLUMN_PASSWORD, "admin");
+        values.put(COLUMN_ROLE, "admin");
+        db.insert(TABLE_USERS, null, values);
+    }
+
+    // Insertando estados para los ticket
+    private void insertarEstadosPorDefecto(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_NAME_STATE, "Abierto");
+        db.insert(TABLE_STATE, null, values);
+
+        values.put(COLUMN_NAME_STATE, "En proceso");
+        db.insert(TABLE_STATE, null, values);
+
+        values.put(COLUMN_NAME_STATE, "Cerrado");
+        db.insert(TABLE_STATE, null, values);
+    }
+
     private void insertarDatosEjemplo(SQLiteDatabase db) {
         db.execSQL("INSERT INTO " + TABLE_TIPO_SOLICITUD + " (" + COLUMN_NOMBRE + ") VALUES ('Problemas con el email')");
         db.execSQL("INSERT INTO " + TABLE_TIPO_SOLICITUD + " (" + COLUMN_NOMBRE + ") VALUES ('Problemas con la app')");
@@ -88,26 +137,26 @@ public class Basededatos extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // Ticket de ejemplo 1
-        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 1 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Problemas con el correo electrónico desde el domingo. NO puedo entrar y me voy quedar sin trabajo");
-        values.put(COLUMN_TIPO_TICKET,"Problemas con el correo electrónico");
-        values.put(COLUMN_ESTADO_TICKET,"Abierto");
+        values.put(COLUMN_TICKET_ID_SOLICITUD,1);
+        values.put(COLUMN_TICKET_ID_STATE,1);
         db.insert(TABLE_TICKET, null, values);
 
         // Ticket de ejemplo 2
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 2 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 2 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "El codigo no me compila le he preguntado a Chat GPT que pasa pero no me ayuda. AAAAAAAAAAAAA");
-        values.put(COLUMN_TIPO_TICKET,"Problemas con la aplicación móvil");
-        values.put(COLUMN_ESTADO_TICKET,"Cerrado");
+        values.put(COLUMN_TICKET_ID_SOLICITUD,2);
+        values.put(COLUMN_TICKET_ID_STATE,1);
         db.insert(TABLE_TICKET, null, values);
 
         // Ticket de ejemplo 3
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 3 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 3 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Desde ayer no puedo entrar a mi pc debido a que me dice que le de dinero por bitcoin no se que hacer");
-        values.put(COLUMN_TIPO_TICKET,"Virus en la computadora");
-        values.put(COLUMN_ESTADO_TICKET,"En curso");
+        values.put(COLUMN_TICKET_ID_SOLICITUD,3);
+        values.put(COLUMN_TICKET_ID_STATE,1);
         db.insert(TABLE_TICKET, null, values);
 
     }
@@ -225,5 +274,31 @@ public class Basededatos extends SQLiteOpenHelper {
         db.close();
 
         return userName;
+    }
+
+    public String obtenerRolUsuarioDesdeBD(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {COLUMN_ROLE};
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        String userRole = "";
+        if (cursor.moveToFirst()) {
+            userRole = cursor.getString(cursor.getColumnIndex(COLUMN_ROLE));
+        }
+        cursor.close();
+        db.close();
+
+        return userRole;
     }
 }

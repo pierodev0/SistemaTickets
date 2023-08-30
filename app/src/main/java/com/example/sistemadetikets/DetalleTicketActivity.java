@@ -51,16 +51,36 @@ public class DetalleTicketActivity extends AppCompatActivity {
             ticket = (Ticket) objetoEnviado.getSerializable("data");
 
             txtIdTicket.setText(ticket.getId()+"");
-            txtTipoTicket.setText(ticket.getTipoTicket()+"");
+            txtTipoTicket.setText(consultarTipoSolicitud(ticket.getId_solicitud()));
             txtDescripcionTicket.setText(ticket.getDescripcion()+"");
-            txtEstadoTicket.setText(ticket.getEstadoTicket()+"");
+            txtEstadoTicket.setText(mostrarEstado(ticket.getId_estado()));
+            txtSolucionTicket.setText(ticket.getSolucion());
             consultarUsuario(ticket.getId_usuario());
         }
 
+    }
 
+    private String consultarTipoSolicitud(int id_solicitud){
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String resultadoTipoSolicitud=null;
+        // SELECT * from tipo_solicitud WHERE id_solicitud = ?
+        Cursor cursor = db.rawQuery("SELECT * FROM tipo_solicitud WHERE id_solicitud=?", new String[]{String.valueOf(id_solicitud)});
+        while (cursor.moveToNext()){
+            resultadoTipoSolicitud = cursor.getString(1);
+        }
+        return resultadoTipoSolicitud;
+    }
 
-
-
+    private String mostrarEstado(int estado){
+        String respuesta = "";
+        if(estado == 1){
+            respuesta = "Abierto";
+        } else if (estado==2) {
+            respuesta="En proceso";
+        } else if (estado==3) {
+            respuesta="Cerrado";
+        }
+        return respuesta;
     }
 
     private void consultarUsuario(Integer idUsuario) {
