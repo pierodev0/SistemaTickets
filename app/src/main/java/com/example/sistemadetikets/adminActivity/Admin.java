@@ -1,7 +1,8 @@
-package com.example.sistemadetikets;
+package com.example.sistemadetikets.adminActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,18 +12,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.sistemadetikets.Basededatos;
+import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.adaptador.TicketAdaptador;
 import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TicketLayout;
 
 import java.util.ArrayList;
 
-public class Usuario extends AppCompatActivity {
-    private ListView lvItems;
+public class Admin extends AppCompatActivity {
+    private ListView lvItemsAdmin;
     private TicketAdaptador adaptador;
     ArrayList<String> listaInformacion;
     ArrayList<Ticket> listaTicket;
-    ArrayList<TicketLayout> listaTicketLayout;
 
     ArrayList<TicketLayout> arrayEntidad;
     Basededatos conn;
@@ -30,29 +32,29 @@ public class Usuario extends AppCompatActivity {
     TextView txt_bienvenida;
     String userId;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usuario);
+        setContentView(R.layout.activity_admin);
 
         String userName = getIntent().getStringExtra("user_name");
         String userLastName = getIntent().getStringExtra("user_last_name");
         userId = getIntent().getStringExtra("user_id");
 
 
-        lvItems = (ListView) findViewById(R.id.lvItems);
+        lvItemsAdmin = (ListView) findViewById(R.id.lvItemsAdmin);
         conn = new Basededatos(getApplicationContext());
         consultarListaTickets();
         arrayEntidad = getTickets();
         adaptador = new TicketAdaptador(this,arrayEntidad);
-        lvItems.setAdapter(adaptador);
+        lvItemsAdmin.setAdapter(adaptador);
 
-
-        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvItemsAdmin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
+                Intent intent = new Intent(Admin.this, DetalleTicketAdminActivity.class);
                 //intent.putExtra("data",arrayEntidad.get(position));
                 intent.putExtra("data",listaTicket.get(position));
                 startActivity(intent);
@@ -75,8 +77,8 @@ public class Usuario extends AppCompatActivity {
 
 
         //Mostrar un mensaje de bienvenida con el nombre del usuario
-        TextView txtBienvenida = findViewById(R.id.txt_nomb);
-        txtBienvenida.setText("" + userName + " " + userLastName + "!");
+        txt_bienvenida = findViewById(R.id.txt_nomb_admin);
+        txt_bienvenida.setText("" + userName + " " + userLastName + "!");
     }
 
     private void consultarListaTickets() {
@@ -97,18 +99,20 @@ public class Usuario extends AppCompatActivity {
             ticket.setSolucion(cursor.getString(6));
 
             listaTicket.add(ticket);
-        }
-    }
 
-    private String consultarTipoSolicitud(int id_solicitud){
-        SQLiteDatabase db = conn.getReadableDatabase();
-        String resultadoTipoSolicitud=null;
-        // SELECT * from tipo_solicitud WHERE id_solicitud = ?
-        Cursor cursor = db.rawQuery("SELECT * FROM tipo_solicitud WHERE id_solicitud=?", new String[]{String.valueOf(id_solicitud)});
-        while (cursor.moveToNext()){
-            resultadoTipoSolicitud = cursor.getString(1);
         }
-        return resultadoTipoSolicitud;
+
+    }
+    private String mostrarEstado(int estado){
+        String respuesta = "";
+        if(estado == 1){
+            respuesta = "Abierto";
+        } else if (estado==2) {
+            respuesta="En proceso";
+        } else if (estado==3) {
+            respuesta="Cerrado";
+        }
+        return respuesta;
     }
 
 
@@ -119,7 +123,7 @@ public class Usuario extends AppCompatActivity {
             Ticket item = listaTicket.get(i);
 
             Integer id = item.getId();
-            String tipoTicket = consultarTipoSolicitud(item.getId_solicitud());
+            String tipoTicket = item.getId_solicitud().toString();
             String descripcion = item.getDescripcion();
             String estado = item.getId_estado().toString();
 
@@ -128,14 +132,13 @@ public class Usuario extends AppCompatActivity {
         return listeItems;
     }
 
-
     public void onClick(View view) {
         Intent miIntent = null;
-        if(view.getId() == R.id.btnOpcionCrearTicket){
-            miIntent = new Intent(Usuario.this,CrearTicketActivity.class);
-            miIntent.putExtra("user_id", userId);
-
-        }
+//        if(view.getId() == R.id.btnOpcionCrearTicket){
+//            miIntent = new Intent(Admin.this,CrearTicketAdminActivity.class);
+//            miIntent.putExtra("user_id", userId);
+//
+//        }
         if(miIntent != null){
             startActivity(miIntent);
         }

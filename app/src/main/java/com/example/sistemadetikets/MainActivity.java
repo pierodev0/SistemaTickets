@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sistemadetikets.UsuarioActivity.Usuario;
+import com.example.sistemadetikets.adminActivity.Admin;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView txt_Reg;

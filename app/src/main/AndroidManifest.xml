@@ -15,22 +15,22 @@
             android:name=".CrearTicketAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".DetalleTicketAdminActivity"
+            android:name=".adminActivity.DetalleTicketAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin"
+            android:name=".adminActivity.Admin"
             android:exported="false" />
         <activity
-            android:name=".ActualizarTicketActivity"
+            android:name=".UsuarioActivity.ActualizarTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".DetalleTicketActivity"
+            android:name=".UsuarioActivity.DetalleTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".CrearTicketActivity"
+            android:name=".UsuarioActivity.CrearTicketActivity"
             android:exported="false" />
         <activity
-            android:name=".Usuario"
+            android:name=".UsuarioActivity.Usuario"
             android:exported="false" />
         <activity
             android:name=".RegistrodeUsuarios"

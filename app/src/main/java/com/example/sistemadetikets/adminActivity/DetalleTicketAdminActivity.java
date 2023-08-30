@@ -1,10 +1,12 @@
-package com.example.sistemadetikets;
+package com.example.sistemadetikets.adminActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.sistemadetikets.Basededatos;
+import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TicketLayout;
 

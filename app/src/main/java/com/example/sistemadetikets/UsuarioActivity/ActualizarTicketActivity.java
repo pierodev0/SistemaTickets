@@ -1,4 +1,4 @@
-package com.example.sistemadetikets;
+package com.example.sistemadetikets.UsuarioActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,48 +7,62 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sistemadetikets.Basededatos;
+import com.example.sistemadetikets.R;
+import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TipoSolicitud;
+import com.example.sistemadetikets.utilidades.Utilidades;
 
 import java.util.ArrayList;
 
-public class CrearTicketActivity extends AppCompatActivity {
+public class ActualizarTicketActivity extends AppCompatActivity {
+
+    TextView txtIdTicket,txtNombrePersona,txtTipoTicket,txtDescripcionTicket,txtEstadoTicket,txtSolucionTicket,txtCorreo;
 
     Spinner comboSpinner;
-    EditText txtDescripcion;
-    Basededatos conn;
-
     ArrayList<String> listaTipos;
     ArrayList<TipoSolicitud> tipoSolicituds;
+    Basededatos conn;
+
     String userId;
+    Ticket ticket = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_ticket);
+        setContentView(R.layout.activity_actualizar_ticket);
 
         conn = new Basededatos(getApplicationContext());
 
+        txtIdTicket = (TextView) findViewById(R.id.txtIdTicket);
+        txtNombrePersona = (TextView) findViewById(R.id.txtNombrePersona);
+        txtDescripcionTicket = (TextView) findViewById(R.id.txtDescripcionTicket);
+        txtEstadoTicket = (TextView) findViewById(R.id.txtEstadoTicket);
+        txtSolucionTicket = (TextView) findViewById(R.id.txtSolucionTicket);
+        txtCorreo = (TextView) findViewById(R.id.txtCorreo);
+
+        userId = getIntent().getStringExtra("user_id");
         comboSpinner = findViewById(R.id.spinner);
-        txtDescripcion = findViewById(R.id.txtDescripcion);
-
-         userId = getIntent().getStringExtra("user_id");
-
 
         consultarListaTipos();
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listaTipos);
         comboSpinner.setAdapter(adapter);
 
+        Bundle objetoEnviado = getIntent().getExtras();
+        if(objetoEnviado != null){
+            ticket = (Ticket) objetoEnviado.getSerializable("data");
+
+            txtIdTicket.setText(ticket.getId()+"");
+
+        }
 
     }
-
     private void consultarListaTipos() {
         SQLiteDatabase db = conn.getReadableDatabase();
 
@@ -78,23 +92,22 @@ public class CrearTicketActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        crearTicket();
-    }
-
-    private void crearTicket() {
-
-        if(TextUtils.isEmpty(txtDescripcion.getText().toString())){
-            txtDescripcion.setError("La Descripcion es obligatoria");
-            return;
+        if(view.getId() == R.id.btnActualizarTicket){
+            actualizarTicket();
         }
 
+    }
 
+
+
+    private void actualizarTicket() {
         SQLiteDatabase db = conn.getWritableDatabase();
+        String[] parametros = {txtIdTicket.getText().toString()};
         ContentValues values = new ContentValues();
 
-        values.put(Basededatos.COLUMN_DESCRIPCION,txtDescripcion.getText().toString());
-        values.put(Basededatos.COLUMN_NAME_STATE,"Abierto");
-        values.put(Basededatos.COLUMN_ID_USUARIO,userId);
+        values.put(Utilidades.COLUMN_DESCRIPCION,txtDescripcionTicket.getText().toString());
+        values.put(Utilidades.COLUMN_NAME_STATE,"Abierto");
+        values.put(Utilidades.COLUMN_ID_USUARIO,ticket.getId_usuario().toString());
 
         int idCombo = (int) comboSpinner.getSelectedItemId();
 
@@ -102,17 +115,17 @@ public class CrearTicketActivity extends AppCompatActivity {
             int idTipo = tipoSolicituds.get(idCombo - 1).getId();
 
             String tipoTicket = listaTipos.get(idTipo);
-            values.put(Basededatos.COLUMN_TICKET_ID_SOLICITUD,tipoTicket);
+            values.put(Utilidades.COLUMN_TICKET_ID_SOLICITUD,tipoTicket);
 
-            Long idResultante = db.insert(Basededatos.TABLE_TICKET,Basededatos.COLUMN_ID_TICKET,values);
-            db.close();
-            Intent intent = new Intent(CrearTicketActivity.this,Usuario.class);
+            db.update(Utilidades.TABLE_TICKET,values,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
+
+            Intent intent = new Intent(ActualizarTicketActivity.this, Usuario.class);
             startActivity(intent);
-            Toast.makeText(this, "Ticket creado", Toast.LENGTH_SHORT).show();
-        } else {
+            Toast.makeText(this, "Se actualizo el ticket", Toast.LENGTH_SHORT).show();
+            db.close();
+        }else {
             Toast.makeText(this, "No ha seleccionado el tipo de problema", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }

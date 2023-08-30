@@ -1,4 +1,4 @@
-package com.example.sistemadetikets;
+package com.example.sistemadetikets.UsuarioActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sistemadetikets.Basededatos;
+import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TicketLayout;
+import com.example.sistemadetikets.utilidades.Utilidades;
 
 public class DetalleTicketActivity extends AppCompatActivity {
     Basededatos conn;
@@ -104,7 +107,7 @@ public class DetalleTicketActivity extends AppCompatActivity {
     public void onClick(View view) {
         Intent miIntent = null;
         if(view.getId() == R.id.btnOpcionActualizarTicket){
-            miIntent = new Intent(DetalleTicketActivity.this,ActualizarTicketActivity.class);
+            miIntent = new Intent(DetalleTicketActivity.this, ActualizarTicketActivity.class);
             miIntent.putExtra("data",ticket);
             miIntent.putExtra("user_id", userId);
 
@@ -121,9 +124,9 @@ public class DetalleTicketActivity extends AppCompatActivity {
         SQLiteDatabase db = conn.getWritableDatabase();
         String[] parametros = {txtIdTicket.getText().toString()};
 
-        db.delete(Basededatos.TABLE_TICKET,Basededatos.COLUMN_ID_TICKET+"=?",parametros);
+        db.delete(Utilidades.TABLE_TICKET,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
         db.close();
-        Intent intent = new Intent(DetalleTicketActivity.this,Usuario.class);
+        Intent intent = new Intent(DetalleTicketActivity.this, Usuario.class);
         startActivity(intent);
         Toast.makeText(this, "Se elimino el ticket", Toast.LENGTH_SHORT).show();
     }
