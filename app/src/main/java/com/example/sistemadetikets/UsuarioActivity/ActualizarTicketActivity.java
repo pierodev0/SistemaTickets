@@ -57,8 +57,10 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         Bundle objetoEnviado = getIntent().getExtras();
         if(objetoEnviado != null){
             ticket = (Ticket) objetoEnviado.getSerializable("data");
-
+            txtEstadoTicket.setText(mostrarEstado(ticket.getId_estado()));
+            txtSolucionTicket.setText(ticket.getSolucion());
             txtIdTicket.setText(ticket.getId()+"");
+            consultarUsuario(ticket.getId_usuario());
 
         }
 
@@ -81,6 +83,18 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         }
 
         obtenerLista();
+    }
+
+    private String mostrarEstado(int estado){
+        String respuesta = "";
+        if(estado == 1){
+            respuesta = "Abierto";
+        } else if (estado==2) {
+            respuesta="En proceso";
+        } else if (estado==3) {
+            respuesta="Cerrado";
+        }
+        return respuesta;
     }
 
     private void obtenerLista() {
@@ -106,16 +120,14 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
 
         values.put(Utilidades.COLUMN_DESCRIPCION,txtDescripcionTicket.getText().toString());
-        values.put(Utilidades.COLUMN_NAME_STATE,"Abierto");
+        values.put(Utilidades.COLUMN_TICKET_ID_STATE,1);
         values.put(Utilidades.COLUMN_ID_USUARIO,ticket.getId_usuario().toString());
 
         int idCombo = (int) comboSpinner.getSelectedItemId();
 
         if(idCombo!= 0){
             int idTipo = tipoSolicituds.get(idCombo - 1).getId();
-
-            String tipoTicket = listaTipos.get(idTipo);
-            values.put(Utilidades.COLUMN_TICKET_ID_SOLICITUD,tipoTicket);
+            values.put(Utilidades.COLUMN_TICKET_ID_SOLICITUD,idTipo);
 
             db.update(Utilidades.TABLE_TICKET,values,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
 
@@ -128,5 +140,23 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void consultarUsuario(Integer idUsuario) {
+        SQLiteDatabase db = conn.getWritableDatabase();
+        String[] parametros = {idUsuario.toString()};
+        String[] campos ={"nombres","apellidos","email"};
+
+        try {
+            Cursor cursor = db.query("usuarios",campos,"id"+"=?",parametros,null,null,null);
+            cursor.moveToFirst();
+            txtNombrePersona.setText(cursor.getString(0)+" "+cursor.getString(1));
+            txtCorreo.setText(cursor.getString(2));
+            cursor.close();
+        } catch (Exception e){
+            Toast.makeText(this, "El registro no existe", Toast.LENGTH_SHORT).show();
+            //campoNombrePersona.setText("");
+            //campoTelefonoPersona.setText("");
+        }
     }
 }

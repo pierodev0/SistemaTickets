@@ -94,24 +94,26 @@ public class CrearTicketActivity extends AppCompatActivity {
         SQLiteDatabase db = conn.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put(Utilidades.COLUMN_ID_USUARIO,userId);
         values.put(Utilidades.COLUMN_DESCRIPCION,txtDescripcion.getText().toString());
         values.put(Utilidades.COLUMN_TICKET_ID_STATE,1);
         // values.put(Utilidades.COLUMN_NAME_STATE,"Abierto");
-        values.put(Utilidades.COLUMN_ID_USUARIO,userId);
+
 
         int idCombo = (int) comboSpinner.getSelectedItemId();
 
         if(idCombo!= 0){
             int idTipo = tipoSolicituds.get(idCombo - 1).getId();
 
-            String tipoTicket = listaTipos.get(idTipo);
-            values.put(Utilidades.COLUMN_TICKET_ID_SOLICITUD,tipoTicket);
+            values.put(Utilidades.COLUMN_TICKET_ID_SOLICITUD,idTipo);
 
             Long idResultante = db.insert(Utilidades.TABLE_TICKET,Utilidades.COLUMN_ID_TICKET,values);
             db.close();
+
             Intent intent = new Intent(CrearTicketActivity.this, Usuario.class);
             startActivity(intent);
             Toast.makeText(this, "Ticket creado", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(this, "No ha seleccionado el tipo de problema", Toast.LENGTH_SHORT).show();
         }

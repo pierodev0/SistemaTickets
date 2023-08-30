@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Utilidades {
 
+    public static String USER_ID;
+
     // ----------------------tabla usuario
     public static final String TABLE_USERS = "usuarios";
     public static final String COLUMN_ID = "id";
@@ -85,7 +87,15 @@ public class Utilidades {
         values.clear();
         values.put(COLUMN_NOMBRES, "jose");
         values.put(COLUMN_APELLIDOS, "vega");
-        values.put(COLUMN_EMAIL, "jose@gmail.com");
+        values.put(COLUMN_EMAIL, "user1@gmail.com");
+        values.put(COLUMN_PASSWORD, "123");
+        values.put(COLUMN_ROLE, "usuario");
+        db.insert(TABLE_USERS, null, values);
+
+        values.clear();
+        values.put(COLUMN_NOMBRES, "maria");
+        values.put(COLUMN_APELLIDOS, "josefina");
+        values.put(COLUMN_EMAIL, "user2@gmail.com");
         values.put(COLUMN_PASSWORD, "123");
         values.put(COLUMN_ROLE, "usuario");
         db.insert(TABLE_USERS, null, values);
@@ -112,8 +122,15 @@ public class Utilidades {
         ContentValues values = new ContentValues();
 
         // Ticket de ejemplo 1
-        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Problemas con el correo electrónico desde el domingo. NO puedo entrar y me voy quedar sin trabajo");
+        values.put(COLUMN_TICKET_ID_SOLICITUD,1);
+        values.put(COLUMN_TICKET_ID_STATE,1);
+        db.insert(TABLE_TICKET, null, values);
+
+        // Ticket de ejemplo 1
+        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_DESCRIPCION, "Problemas con SENATI. NO puedo entrar y me voy quedar sin trabajo");
         values.put(COLUMN_TICKET_ID_SOLICITUD,1);
         values.put(COLUMN_TICKET_ID_STATE,1);
         db.insert(TABLE_TICKET, null, values);

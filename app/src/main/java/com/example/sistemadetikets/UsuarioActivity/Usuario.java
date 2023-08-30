@@ -2,7 +2,9 @@ package com.example.sistemadetikets.UsuarioActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.adaptador.TicketAdaptador;
 import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TicketLayout;
+import com.example.sistemadetikets.utilidades.Utilidades;
 
 import java.util.ArrayList;
 
@@ -31,14 +34,17 @@ public class Usuario extends AppCompatActivity {
 
     TextView txt_bienvenida;
     String userId;
+    String userName;
+    String userLastName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
 
-        String userName = getIntent().getStringExtra("user_name");
-        String userLastName = getIntent().getStringExtra("user_last_name");
+        userName = getIntent().getStringExtra("user_name");
+        userLastName = getIntent().getStringExtra("user_last_name");
         userId = getIntent().getStringExtra("user_id");
 
 
@@ -77,6 +83,7 @@ public class Usuario extends AppCompatActivity {
 
 
         //Mostrar un mensaje de bienvenida con el nombre del usuario
+        SharedPreferences preferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
         TextView txtBienvenida = findViewById(R.id.txt_nomb);
         txtBienvenida.setText("" + userName + " " + userLastName + "!");
     }
@@ -142,4 +149,6 @@ public class Usuario extends AppCompatActivity {
             startActivity(miIntent);
         }
     }
+
+
 }
