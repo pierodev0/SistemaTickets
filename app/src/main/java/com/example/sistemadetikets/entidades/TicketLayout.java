@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 public class TicketLayout implements Serializable {
     private int id;
-    private String Titulo;
+    private String nombreSolicitud;
     private String Descripcion;
     private String estado;
 
-    public TicketLayout(int id, String titulo, String descripcion, String estado) {
+    public TicketLayout(){
+
+    }
+
+    public TicketLayout(int id, String nombreSolicitud, String descripcion, String estado) {
         this.id = id;
-        Titulo = titulo;
+        this.nombreSolicitud = nombreSolicitud;
         Descripcion = descripcion;
         this.estado = estado;
     }
@@ -23,12 +27,13 @@ public class TicketLayout implements Serializable {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return Titulo;
+
+    public String getNombreSolicitud() {
+        return nombreSolicitud;
     }
 
-    public void setTitulo(String titulo) {
-        Titulo = titulo;
+    public void setNombreSolicitud(String nombreSolicitud) {
+        this.nombreSolicitud = nombreSolicitud;
     }
 
     public String getDescripcion() {

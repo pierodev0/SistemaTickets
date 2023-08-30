@@ -6,22 +6,23 @@ public class Ticket implements Serializable {
     private Integer id;
     private Integer id_usuario;
     private String fechaCreacion;
-    private String tipoTicket;
+    private Integer id_estado;
+    private Integer id_solicitud;
     private String Descripcion;
-
-    private String estadoTicket;
+    private String solucion;
 
     public Ticket() {
 
     }
 
-    public Ticket(Integer id, Integer id_usuario, String fechaCreacion, String tipoTicket, String descripcion, String estadoTicket) {
+    public Ticket(Integer id, Integer id_usuario, String fechaCreacion, Integer id_estado, Integer id_solicitud, String descripcion, String solucion) {
         this.id = id;
         this.id_usuario = id_usuario;
         this.fechaCreacion = fechaCreacion;
-        this.tipoTicket = tipoTicket;
+        this.id_estado = id_estado;
+        this.id_solicitud = id_solicitud;
         Descripcion = descripcion;
-        this.estadoTicket = estadoTicket;
+        this.solucion = solucion;
     }
 
     public Integer getId() {
@@ -48,12 +49,20 @@ public class Ticket implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getTipoTicket() {
-        return tipoTicket;
+    public Integer getId_estado() {
+        return id_estado;
     }
 
-    public void setTipoTicket(String tipoTicket) {
-        this.tipoTicket = tipoTicket;
+    public void setId_estado(Integer id_estado) {
+        this.id_estado = id_estado;
+    }
+
+    public Integer getId_solicitud() {
+        return id_solicitud;
+    }
+
+    public void setId_solicitud(Integer id_solicitud) {
+        this.id_solicitud = id_solicitud;
     }
 
     public String getDescripcion() {
@@ -64,11 +73,11 @@ public class Ticket implements Serializable {
         Descripcion = descripcion;
     }
 
-    public String getEstadoTicket() {
-        return estadoTicket;
+    public String getSolucion() {
+        return solucion;
     }
 
-    public void setEstadoTicket(String estadoTicket) {
-        this.estadoTicket = estadoTicket;
+    public void setSolucion(String solucion) {
+        this.solucion = solucion;
     }
 }

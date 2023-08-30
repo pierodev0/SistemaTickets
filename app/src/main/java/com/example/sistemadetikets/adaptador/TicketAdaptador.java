@@ -50,11 +50,23 @@ public class TicketAdaptador extends BaseAdapter {
 
         //imgFoto.setImageREsource(Item.getImgFoto);
         txtIdTicket.setText(Item.getId()+""); //Tiene que ser string
-        txtTipoTicket.setText(Item.getTitulo());
+        txtTipoTicket.setText(Item.getNombreSolicitud());
         txtDescripcionTicket.setText(Item.getDescripcion());
-        txtEstadoTicket.setText(Item.getEstado());
+        txtEstadoTicket.setText(mostrarEstado(Integer.parseInt(Item.getEstado())));
 
 
         return convertView;
+    }
+
+    private String mostrarEstado(int estado){
+        String respuesta = "";
+        if(estado == 1){
+            respuesta = "Abierto";
+        } else if (estado==2) {
+            respuesta="En proceso";
+        } else if (estado==3) {
+            respuesta="Cerrado";
+        }
+        return respuesta;
     }
 }
