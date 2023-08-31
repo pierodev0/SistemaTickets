@@ -57,7 +57,10 @@ public class Admin extends AppCompatActivity {
 
                 Intent intent = new Intent(Admin.this, DetalleTicketAdminActivity.class);
                 //intent.putExtra("data",arrayEntidad.get(position));
-                intent.putExtra("data",arrayListTicket.get(position));
+                intent.putExtra("data", arrayListTicket.get(position));
+                intent.putExtra("user_name", userName);
+                intent.putExtra("user_last_name", userLastName);
+                intent.putExtra("user_id", userId);
                 startActivity(intent);
 
 

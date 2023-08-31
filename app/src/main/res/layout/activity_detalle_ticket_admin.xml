@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtIdTicket" />
 
             <TextView
-                android:id="@+id/txtNombreRazonSocial"
+                android:id="@+id/txtNombrePersona"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -91,7 +91,7 @@
                 android:textColor="#292A62"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNombreRazonSocial" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNombrePersona" />
 
             <TextView
                 android:id="@+id/txtCorreo"
