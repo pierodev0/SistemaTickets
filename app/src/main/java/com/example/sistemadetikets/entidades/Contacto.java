@@ -1,6 +1,8 @@
 package com.example.sistemadetikets.entidades;
 
-public class Contacto {
+import java.io.Serializable;
+
+public class Contacto implements Serializable {
 
     private Integer id;
 

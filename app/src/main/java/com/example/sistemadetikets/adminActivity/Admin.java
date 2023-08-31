@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sistemadetikets.Basededatos;
 import com.example.sistemadetikets.R;
@@ -24,7 +25,7 @@ public class Admin extends AppCompatActivity {
     private ListView lvItemsAdmin;
     private TicketAdaptador adaptador;
     ArrayList<String> listaInformacion;
-    ArrayList<Ticket> listaTicket;
+    ArrayList<Ticket> arrayListTicket;
 
     ArrayList<TicketLayout> arrayEntidad;
     Basededatos conn;
@@ -56,7 +57,7 @@ public class Admin extends AppCompatActivity {
 
                 Intent intent = new Intent(Admin.this, DetalleTicketAdminActivity.class);
                 //intent.putExtra("data",arrayEntidad.get(position));
-                intent.putExtra("data",listaTicket.get(position));
+                intent.putExtra("data",arrayListTicket.get(position));
                 startActivity(intent);
 
 
@@ -84,10 +85,10 @@ public class Admin extends AppCompatActivity {
     private void consultarListaTickets() {
         SQLiteDatabase db = conn.getReadableDatabase();
         Ticket ticket = null;
-        listaTicket = new ArrayList<Ticket>();
+        arrayListTicket = new ArrayList<Ticket>();
 
         //SELECT * FROM tickets
-        Cursor cursor = db.rawQuery("SELECT * FROM TICKET",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM TICKET WHERE id_usuario="+userId,null);
         while (cursor.moveToNext()){
             ticket = new Ticket();
             ticket.setId(cursor.getInt(0));
@@ -98,10 +99,8 @@ public class Admin extends AppCompatActivity {
             ticket.setDescripcion(cursor.getString(5));
             ticket.setSolucion(cursor.getString(6));
 
-            listaTicket.add(ticket);
-
+            arrayListTicket.add(ticket);
         }
-
     }
     private String mostrarEstado(int estado){
         String respuesta = "";
@@ -119,17 +118,28 @@ public class Admin extends AppCompatActivity {
     private ArrayList<TicketLayout> getTickets(){
         ArrayList<TicketLayout> listeItems = new ArrayList<>();
 
-        for (int i = 0; i <listaTicket.size();i++){
-            Ticket item = listaTicket.get(i);
+        for (int i = 0; i <arrayListTicket.size();i++){
+            Ticket item = arrayListTicket.get(i);
 
             Integer id = item.getId();
-            String tipoTicket = item.getId_solicitud().toString();
+            String tipoTicket = consultarTipoSolicitud(item.getId_solicitud());
             String descripcion = item.getDescripcion();
             String estado = item.getId_estado().toString();
 
             listeItems.add(new TicketLayout(id, tipoTicket,descripcion,estado));
         }
         return listeItems;
+    }
+
+    private String consultarTipoSolicitud(int id_solicitud){
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String resultadoTipoSolicitud=null;
+        // SELECT * from tipo_solicitud WHERE id_solicitud = ?
+        Cursor cursor = db.rawQuery("SELECT * FROM tipo_solicitud WHERE id_solicitud=?", new String[]{String.valueOf(id_solicitud)});
+        while (cursor.moveToNext()){
+            resultadoTipoSolicitud = cursor.getString(1);
+        }
+        return resultadoTipoSolicitud;
     }
 
     public void onClick(View view) {

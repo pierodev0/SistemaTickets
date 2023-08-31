@@ -2,14 +2,19 @@ package com.example.sistemadetikets.adminActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sistemadetikets.Basededatos;
 import com.example.sistemadetikets.R;
+import com.example.sistemadetikets.UsuarioActivity.DetalleTicketActivity;
+import com.example.sistemadetikets.UsuarioActivity.Usuario;
 import com.example.sistemadetikets.adaptador.ContactoAdaptador;
 import com.example.sistemadetikets.entidades.Contacto;
 import com.example.sistemadetikets.entidades.ContactoLayout;
@@ -50,6 +55,32 @@ public class ContactosAdminActivity extends AppCompatActivity {
         //Mostrar un mensaje de bienvenida con el nombre del usuario
         TextView txtBienvenida = findViewById(R.id.txt_nomb);
         txtBienvenida.setText("" + userName + " " + userLastName + "!");
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent(ContactosAdminActivity.this, Admin.class);
+                //intent.putExtra("data",arrayEntidad.get(position));
+                intent.putExtra("data", arrayListContacto.get(position));
+                intent.putExtra("user_name", userName);
+                intent.putExtra("user_last_name", userLastName);
+                intent.putExtra("user_id", arrayListContacto.get(position).getId().toString());
+                startActivity(intent);
+
+
+                /*
+                //Enviar el objeto a otra actividad
+                Ticket ticket = listaTicket.get(position);
+                Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",ticket);
+                startActivity(intent);
+                */
+
+            }
+        });
     }
 
     private void consultarListaUsuarios() {
