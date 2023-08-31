@@ -11,11 +11,8 @@ import android.widget.TextView;
 import com.example.sistemadetikets.Basededatos;
 import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.adaptador.ContactoAdaptador;
-import com.example.sistemadetikets.adaptador.TicketAdaptador;
 import com.example.sistemadetikets.entidades.Contacto;
 import com.example.sistemadetikets.entidades.ContactoLayout;
-import com.example.sistemadetikets.entidades.Ticket;
-import com.example.sistemadetikets.entidades.TicketLayout;
 
 import java.util.ArrayList;
 
@@ -45,8 +42,8 @@ public class ContactosAdminActivity extends AppCompatActivity {
 
         lvItems = (ListView) findViewById(R.id.lvItems);
         conn = new Basededatos(getApplicationContext());
-        consultarListaTickets();
-        arrayEntidad = getTickets();
+        consultarListaUsuarios();
+        arrayEntidad = getContactos();
         adaptador = new ContactoAdaptador(this,arrayEntidad);
         lvItems.setAdapter(adaptador);
 
@@ -55,32 +52,38 @@ public class ContactosAdminActivity extends AppCompatActivity {
         txtBienvenida.setText("" + userName + " " + userLastName + "!");
     }
 
-    private void consultarListaTickets() {
+    private void consultarListaUsuarios() {
         SQLiteDatabase db = conn.getReadableDatabase();
         Contacto contacto = null;
         arrayListContacto = new ArrayList<Contacto>();
 
-        //SELECT * FROM tickets
-        Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE rol='usuario'",null);
+
+        //Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE rol='usuario'",null);
+        Cursor cursor = db.rawQuery("SELECT u.id AS id_usuario,u.nombres AS nombres,u.apellidos as apellidos,COUNT(t.id_ticket) AS numeros_ticket, u.razon_social AS razon_social " +
+                "FROM usuarios u " +
+                "LEFT JOIN ticket t ON u.id = t.id_usuario " +
+                "WHERE u.rol = 'usuario' " +
+                "GROUP BY u.id;", null);
+
         while (cursor.moveToNext()){
             contacto = new Contacto();
             contacto.setId(cursor.getInt(0));
-            contacto.setId_usuario(cursor.getInt(1));
-            contacto.setNumeros_ticket(10);
-            contacto.setRazon_social("Empresa SAC");
+            contacto.setNombre(cursor.getString(1) +" "+ cursor.getString(2));
+            contacto.setNumeros_ticket(cursor.getInt(3));
+            contacto.setRazon_social(cursor.getString(4));
 
             arrayListContacto.add(contacto);
         }
     }
 
-    private ArrayList<ContactoLayout> getTickets(){
+    private ArrayList<ContactoLayout> getContactos(){
         ArrayList<ContactoLayout> listeItems = new ArrayList<>();
 
         for (int i = 0; i < arrayListContacto.size(); i++){
             Contacto item = arrayListContacto.get(i);
 
             Integer id = item.getId();
-            Integer id_usuario = item.getId_usuario();
+            String id_usuario = item.getNombre();
             Integer numTickets = item.getNumeros_ticket();
             String razonSocial = item.getRazon_social();
 

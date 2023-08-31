@@ -34,13 +34,14 @@ public class Basededatos extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertUser(String name, String lastName, String email, String password) {
+    public void insertUser(String name, String lastName, String email, String password,String razon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Utilidades.COLUMN_NOMBRES, name);
         values.put(Utilidades.COLUMN_APELLIDOS, lastName);
         values.put(Utilidades.COLUMN_EMAIL, email);
         values.put(Utilidades.COLUMN_PASSWORD, password);
+        values.put(Utilidades.COLUMN_RAZON_SOCIAL, razon);
 
         // Insert the new row
         long newRowId = db.insert(Utilidades.TABLE_USERS, null, values);

@@ -52,7 +52,7 @@ public class ContactoAdaptador  extends BaseAdapter {
 
         txtRazonSocial.setText(Item.getRazon_social());
         txtNumerosDeTickets.setText(Item.getNumeros_ticket()+"");
-        txtNombrePersona.setText("piero ");
+        txtNombrePersona.setText(Item.getNombre());
 
 
         return convertView;

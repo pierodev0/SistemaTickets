@@ -75,7 +75,7 @@ public class RegistrodeUsuarios extends AppCompatActivity {
 
                 }
 
-                basededatos.insertUser(nombre,apellido,email,password);
+                basededatos.insertUser(nombre,apellido,email,password,razon);
 
                 startActivity(new Intent(RegistrodeUsuarios.this, MainActivity.class));
                 finish();
