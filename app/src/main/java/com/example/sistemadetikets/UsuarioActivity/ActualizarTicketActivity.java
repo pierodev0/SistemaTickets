@@ -31,6 +31,8 @@ public class ActualizarTicketActivity extends AppCompatActivity {
     Basededatos conn;
 
     String userId;
+    String userName;
+    String userLastName;
     Ticket ticket = null;
 
     @Override
@@ -132,6 +134,9 @@ public class ActualizarTicketActivity extends AppCompatActivity {
             db.update(Utilidades.TABLE_TICKET,values,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
 
             Intent intent = new Intent(ActualizarTicketActivity.this, Usuario.class);
+            intent.putExtra("user_name", userName);
+            intent.putExtra("user_last_name", userLastName);
+            intent.putExtra("user_id", userId);
             startActivity(intent);
             Toast.makeText(this, "Se actualizo el ticket", Toast.LENGTH_SHORT).show();
             db.close();
@@ -150,7 +155,9 @@ public class ActualizarTicketActivity extends AppCompatActivity {
         try {
             Cursor cursor = db.query("usuarios",campos,"id"+"=?",parametros,null,null,null);
             cursor.moveToFirst();
-            txtNombrePersona.setText(cursor.getString(0)+" "+cursor.getString(1));
+            userName = cursor.getString(0);
+            userLastName = cursor.getString(1);
+            txtNombrePersona.setText(userName+ " "+userLastName);
             txtCorreo.setText(cursor.getString(2));
             cursor.close();
         } catch (Exception e){

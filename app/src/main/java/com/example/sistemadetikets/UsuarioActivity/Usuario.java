@@ -48,6 +48,7 @@ public class Usuario extends AppCompatActivity {
         userId = getIntent().getStringExtra("user_id");
 
 
+
         lvItems = (ListView) findViewById(R.id.lvItems);
         conn = new Basededatos(getApplicationContext());
         consultarListaTickets();
@@ -63,6 +64,9 @@ public class Usuario extends AppCompatActivity {
                 Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
                 //intent.putExtra("data",arrayEntidad.get(position));
                 intent.putExtra("data",listaTicket.get(position));
+                intent.putExtra("user_name", userName);
+                intent.putExtra("user_last_name", userLastName);
+                intent.putExtra("user_id", userId);
                 startActivity(intent);
 
 
@@ -87,6 +91,9 @@ public class Usuario extends AppCompatActivity {
         TextView txtBienvenida = findViewById(R.id.txt_nomb);
         txtBienvenida.setText("" + userName + " " + userLastName + "!");
     }
+
+
+
 
     private void consultarListaTickets() {
         SQLiteDatabase db = conn.getReadableDatabase();
@@ -139,14 +146,16 @@ public class Usuario extends AppCompatActivity {
 
 
     public void onClick(View view) {
-        Intent miIntent = null;
+        Intent intent = null;
         if(view.getId() == R.id.btnOpcionCrearTicket){
-            miIntent = new Intent(Usuario.this, CrearTicketActivity.class);
-            miIntent.putExtra("user_id", userId);
+            intent = new Intent(Usuario.this, CrearTicketActivity.class);
+            intent.putExtra("user_name", userName);
+            intent.putExtra("user_last_name", userLastName);
+            intent.putExtra("user_id", userId);
 
         }
-        if(miIntent != null){
-            startActivity(miIntent);
+        if(intent != null){
+            startActivity(intent);
         }
     }
 

@@ -30,6 +30,8 @@ public class CrearTicketActivity extends AppCompatActivity {
     ArrayList<String> listaTipos;
     ArrayList<TipoSolicitud> tipoSolicituds;
     String userId;
+    String userName;
+    String userLastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,9 @@ public class CrearTicketActivity extends AppCompatActivity {
         comboSpinner = findViewById(R.id.spinner);
         txtDescripcion = findViewById(R.id.txtDescripcion);
 
-         userId = getIntent().getStringExtra("user_id");
+        userName = getIntent().getStringExtra("user_name");
+        userLastName = getIntent().getStringExtra("user_last_name");
+        userId = getIntent().getStringExtra("user_id");
 
 
         consultarListaTipos();
@@ -111,6 +115,9 @@ public class CrearTicketActivity extends AppCompatActivity {
             db.close();
 
             Intent intent = new Intent(CrearTicketActivity.this, Usuario.class);
+            intent.putExtra("user_name", userName);
+            intent.putExtra("user_last_name", userLastName);
+            intent.putExtra("user_id", userId);
             startActivity(intent);
             Toast.makeText(this, "Ticket creado", Toast.LENGTH_SHORT).show();
 
