@@ -2,9 +2,7 @@ package com.example.sistemadetikets.UsuarioActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,18 +16,15 @@ import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.adaptador.TicketAdaptador;
 import com.example.sistemadetikets.entidades.Ticket;
 import com.example.sistemadetikets.entidades.TicketLayout;
-import com.example.sistemadetikets.utilidades.Utilidades;
 
 import java.util.ArrayList;
 
 public class Usuario extends AppCompatActivity {
     private ListView lvItems;
     private TicketAdaptador adaptador;
-    ArrayList<String> listaInformacion;
-    ArrayList<Ticket> listaTicket;
-    ArrayList<TicketLayout> listaTicketLayout;
+    ArrayList<Ticket> arrayListTicket;
 
-    ArrayList<TicketLayout> arrayEntidad;
+    ArrayList<TicketLayout> arrayListTicketLayout;
     Basededatos conn;
 
     TextView txt_bienvenida;
@@ -52,10 +47,9 @@ public class Usuario extends AppCompatActivity {
         lvItems = (ListView) findViewById(R.id.lvItems);
         conn = new Basededatos(getApplicationContext());
         consultarListaTickets();
-        arrayEntidad = getTickets();
-        adaptador = new TicketAdaptador(this,arrayEntidad);
+        arrayListTicketLayout = getTickets();
+        adaptador = new TicketAdaptador(this, arrayListTicketLayout);
         lvItems.setAdapter(adaptador);
-
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,7 +57,7 @@ public class Usuario extends AppCompatActivity {
 
                 Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
                 //intent.putExtra("data",arrayEntidad.get(position));
-                intent.putExtra("data",listaTicket.get(position));
+                intent.putExtra("data", arrayListTicket.get(position));
                 intent.putExtra("user_name", userName);
                 intent.putExtra("user_last_name", userLastName);
                 intent.putExtra("user_id", userId);
@@ -87,7 +81,6 @@ public class Usuario extends AppCompatActivity {
 
 
         //Mostrar un mensaje de bienvenida con el nombre del usuario
-        SharedPreferences preferences = getSharedPreferences("sesion", Context.MODE_PRIVATE);
         TextView txtBienvenida = findViewById(R.id.txt_nomb);
         txtBienvenida.setText("" + userName + " " + userLastName + "!");
     }
@@ -98,10 +91,10 @@ public class Usuario extends AppCompatActivity {
     private void consultarListaTickets() {
         SQLiteDatabase db = conn.getReadableDatabase();
         Ticket ticket = null;
-        listaTicket = new ArrayList<Ticket>();
+        arrayListTicket = new ArrayList<Ticket>();
 
         //SELECT * FROM tickets
-        Cursor cursor = db.rawQuery("SELECT * FROM TICKET",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM TICKET WHERE id_usuario="+userId,null);
         while (cursor.moveToNext()){
             ticket = new Ticket();
             ticket.setId(cursor.getInt(0));
@@ -112,7 +105,7 @@ public class Usuario extends AppCompatActivity {
             ticket.setDescripcion(cursor.getString(5));
             ticket.setSolucion(cursor.getString(6));
 
-            listaTicket.add(ticket);
+            arrayListTicket.add(ticket);
         }
     }
 
@@ -131,8 +124,8 @@ public class Usuario extends AppCompatActivity {
     private ArrayList<TicketLayout> getTickets(){
         ArrayList<TicketLayout> listeItems = new ArrayList<>();
 
-        for (int i = 0; i <listaTicket.size();i++){
-            Ticket item = listaTicket.get(i);
+        for (int i = 0; i < arrayListTicket.size(); i++){
+            Ticket item = arrayListTicket.get(i);
 
             Integer id = item.getId();
             String tipoTicket = consultarTipoSolicitud(item.getId_solicitud());

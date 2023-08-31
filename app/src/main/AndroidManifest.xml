@@ -12,6 +12,9 @@
         android:theme="@style/Theme.SistemaDeTikets"
         tools:targetApi="31">
         <activity
+            android:name=".adminActivity.ContactosAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".CrearTicketAdminActivity"
             android:exported="false" />
         <activity

@@ -15,6 +15,7 @@ public class Utilidades {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_ROLE = "rol";
+    public static final String COLUMN_RAZON_SOCIAL = "razon_social";
 
 
     public static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
@@ -23,7 +24,8 @@ public class Utilidades {
             + COLUMN_APELLIDOS + " TEXT,"
             + COLUMN_EMAIL + " TEXT,"
             + COLUMN_PASSWORD + " TEXT,"
-            + COLUMN_ROLE + " TEXT DEFAULT 'usuario'"
+            + COLUMN_ROLE + " TEXT DEFAULT 'usuario',"
+            + COLUMN_RAZON_SOCIAL + " TEXT NULL"
             + ")";
 
     // ----------------------tabla estado
@@ -77,9 +79,9 @@ public class Utilidades {
     public static void insertarAdminPorDefecto(SQLiteDatabase db){
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_NOMBRES, "Piero");
-        values.put(COLUMN_APELLIDOS, "Bayona");
-        values.put(COLUMN_EMAIL, "admin@gmail.com");
+        values.put(COLUMN_NOMBRES, "Admin");
+        values.put(COLUMN_APELLIDOS, "");
+        values.put(COLUMN_EMAIL, "admin");
         values.put(COLUMN_PASSWORD, "admin");
         values.put(COLUMN_ROLE, "admin");
         db.insert(TABLE_USERS, null, values);
@@ -87,17 +89,19 @@ public class Utilidades {
         values.clear();
         values.put(COLUMN_NOMBRES, "jose");
         values.put(COLUMN_APELLIDOS, "vega");
-        values.put(COLUMN_EMAIL, "user1@gmail.com");
+        values.put(COLUMN_EMAIL, "user1");
         values.put(COLUMN_PASSWORD, "123");
         values.put(COLUMN_ROLE, "usuario");
+        values.put(COLUMN_RAZON_SOCIAL, "PANADERIA JOSE S.A.C");
         db.insert(TABLE_USERS, null, values);
 
         values.clear();
         values.put(COLUMN_NOMBRES, "maria");
         values.put(COLUMN_APELLIDOS, "josefina");
-        values.put(COLUMN_EMAIL, "user2@gmail.com");
+        values.put(COLUMN_EMAIL, "user2");
         values.put(COLUMN_PASSWORD, "123");
         values.put(COLUMN_ROLE, "usuario");
+        values.put(COLUMN_RAZON_SOCIAL, "PASTELERIA JOSEFINA S.A.C");
         db.insert(TABLE_USERS, null, values);
     }
 
@@ -122,14 +126,14 @@ public class Utilidades {
         ContentValues values = new ContentValues();
 
         // Ticket de ejemplo 1
-        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 1 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Problemas con el correo electrónico desde el domingo. NO puedo entrar y me voy quedar sin trabajo");
         values.put(COLUMN_TICKET_ID_SOLICITUD,1);
         values.put(COLUMN_TICKET_ID_STATE,1);
         db.insert(TABLE_TICKET, null, values);
 
         // Ticket de ejemplo 1
-        values.put(COLUMN_ID_USUARIO, 1); // Reemplaza 1 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 1 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Problemas con SENATI. NO puedo entrar y me voy quedar sin trabajo");
         values.put(COLUMN_TICKET_ID_SOLICITUD,1);
         values.put(COLUMN_TICKET_ID_STATE,1);
@@ -137,7 +141,7 @@ public class Utilidades {
 
         // Ticket de ejemplo 2
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 2 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 3); // Reemplaza 2 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "El codigo no me compila le he preguntado a Chat GPT que pasa pero no me ayuda. AAAAAAAAAAAAA");
         values.put(COLUMN_TICKET_ID_SOLICITUD,2);
         values.put(COLUMN_TICKET_ID_STATE,1);
@@ -145,7 +149,7 @@ public class Utilidades {
 
         // Ticket de ejemplo 3
         values.clear();
-        values.put(COLUMN_ID_USUARIO, 2); // Reemplaza 3 con el ID del usuario real
+        values.put(COLUMN_ID_USUARIO, 3); // Reemplaza 3 con el ID del usuario real
         values.put(COLUMN_DESCRIPCION, "Desde ayer no puedo entrar a mi pc debido a que me dice que le de dinero por bitcoin no se que hacer");
         values.put(COLUMN_TICKET_ID_SOLICITUD,3);
         values.put(COLUMN_TICKET_ID_STATE,1);

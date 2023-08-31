@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.sistemadetikets.UsuarioActivity.Usuario;
 import com.example.sistemadetikets.adminActivity.Admin;
+import com.example.sistemadetikets.adminActivity.ContactosAdminActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     // Redirigir a la Actividad de Usuario según su rol y pasar los datos
                     Intent intent;
                     if("admin".equals(userRole)){
-                        intent = new Intent(MainActivity.this, Admin.class);
+                        intent = new Intent(MainActivity.this, ContactosAdminActivity.class);
                         intent.putExtra("user_name", userName);
                         intent.putExtra("user_last_name", userLastName);
                         intent.putExtra("user_id", userId);

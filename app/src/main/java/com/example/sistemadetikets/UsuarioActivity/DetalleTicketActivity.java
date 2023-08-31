@@ -25,6 +25,8 @@ public class DetalleTicketActivity extends AppCompatActivity {
 
     private TicketLayout item;
     String userId;
+    String userName;
+    String userLastName;
     Ticket ticket = null;
 
 
@@ -43,6 +45,8 @@ public class DetalleTicketActivity extends AppCompatActivity {
         txtSolucionTicket = (TextView) findViewById(R.id.txtSolucionTicket);
         txtCorreo = (TextView) findViewById(R.id.txtCorreo);
 
+        userName = getIntent().getStringExtra("user_name");
+        userLastName = getIntent().getStringExtra("user_last_name");
         userId = getIntent().getStringExtra("user_id");
 
         //item = (Ticket) getIntent().getSerializableExtra("data");
@@ -127,6 +131,9 @@ public class DetalleTicketActivity extends AppCompatActivity {
         db.delete(Utilidades.TABLE_TICKET,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
         db.close();
         Intent intent = new Intent(DetalleTicketActivity.this, Usuario.class);
+        intent.putExtra("user_name", userName);
+        intent.putExtra("user_last_name", userLastName);
+        intent.putExtra("user_id", userId);
         startActivity(intent);
         Toast.makeText(this, "Se elimino el ticket", Toast.LENGTH_SHORT).show();
     }
