@@ -114,7 +114,7 @@ public class DetalleTicketAdminActivity extends AppCompatActivity {
     public void onClick(View view) {
         Intent miIntent = null;
         if(view.getId() == R.id.btnOpcionActualizarTicket){
-            miIntent = new Intent(DetalleTicketAdminActivity.this, ActualizarTicketActivity.class);
+            miIntent = new Intent(DetalleTicketAdminActivity.this, ActualizarDescripcionTicketActivity.class);
             miIntent.putExtra("data",ticket);
             miIntent.putExtra("user_id", userId);
 
