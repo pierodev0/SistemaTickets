@@ -133,7 +133,7 @@ public class DetalleTicketAdminActivity extends AppCompatActivity {
 
         db.delete(Utilidades.TABLE_TICKET,Utilidades.COLUMN_ID_TICKET+"=?",parametros);
         db.close();
-        Intent intent = new Intent(DetalleTicketAdminActivity.this, Admin.class);
+        Intent intent = new Intent(DetalleTicketAdminActivity.this, ContactosAdminActivity.class);
         intent.putExtra("user_name", userName);
         intent.putExtra("user_last_name", userLastName);
         intent.putExtra("user_id", userId);

@@ -1,5 +1,6 @@
 package com.example.sistemadetikets.adminActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,9 +36,13 @@ public class Admin extends AppCompatActivity {
     TextView txt_bienvenida;
     String userId;
 
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
@@ -64,16 +71,6 @@ public class Admin extends AppCompatActivity {
                 startActivity(intent);
 
 
-                /*
-                //Enviar el objeto a otra actividad
-                Ticket ticket = listaTicket.get(position);
-                Intent intent = new Intent(Usuario.this, DetalleTicketActivity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("data",ticket);
-                startActivity(intent);
-                */
-
             }
         });
 
@@ -82,7 +79,7 @@ public class Admin extends AppCompatActivity {
 
         //Mostrar un mensaje de bienvenida con el nombre del usuario
         txt_bienvenida = findViewById(R.id.txt_nomb_admin);
-        txt_bienvenida.setText("" + userName + " " + userLastName + "!");
+        consultarUsuario(userId);
     }
 
     private void consultarListaTickets() {
@@ -143,6 +140,23 @@ public class Admin extends AppCompatActivity {
             resultadoTipoSolicitud = cursor.getString(1);
         }
         return resultadoTipoSolicitud;
+    }
+
+    private void consultarUsuario(String idUsuario) {
+        SQLiteDatabase db = conn.getWritableDatabase();
+        String[] parametros = {idUsuario.toString()};
+        String[] campos ={"nombres","apellidos","email"};
+
+        try {
+            Cursor cursor = db.query("usuarios",campos,"id"+"=?",parametros,null,null,null);
+            cursor.moveToFirst();
+            txt_bienvenida.setText(cursor.getString(0)+" "+cursor.getString(1));
+            cursor.close();
+        } catch (Exception e){
+            Toast.makeText(this, "El registro no existe", Toast.LENGTH_SHORT).show();
+            //campoNombrePersona.setText("");
+            //campoTelefonoPersona.setText("");
+        }
     }
 
     public void onClick(View view) {

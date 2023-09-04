@@ -58,7 +58,6 @@ public class ActualizarDescripcionTicketActivity extends AppCompatActivity {
         Bundle objetoEnviado = getIntent().getExtras();
         if(objetoEnviado != null){
             ticket = (Ticket) objetoEnviado.getSerializable("data");
-            Toast.makeText(this, ticket.getId()+"", Toast.LENGTH_SHORT).show();
 
         }
 

@@ -67,14 +67,6 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnVerDetallesTicket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/color_primario"
-            android:focusable="false"
-            android:text="Ver detalles" />
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

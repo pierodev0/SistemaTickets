@@ -1,17 +1,25 @@
 package com.example.sistemadetikets.UsuarioActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sistemadetikets.Basededatos;
+import com.example.sistemadetikets.MainActivity;
 import com.example.sistemadetikets.R;
 import com.example.sistemadetikets.adaptador.TicketAdaptador;
 import com.example.sistemadetikets.entidades.Ticket;
@@ -32,11 +40,39 @@ public class Usuario extends AppCompatActivity {
     String userName;
     String userLastName;
 
+    //Crear menu para el action bar
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==R.id.item1){
+            Toast.makeText(this, "Sesion finalizada", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
+
+        //Establecer un Action bar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        myToolbar.setBackgroundColor(Color.TRANSPARENT);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userName = getIntent().getStringExtra("user_name");
         userLastName = getIntent().getStringExtra("user_last_name");
